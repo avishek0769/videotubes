@@ -5,7 +5,6 @@
 node_modules/
 
 # Docker files
-Dockerfile
 .dockerignore
 
 # Temporary files and logs
