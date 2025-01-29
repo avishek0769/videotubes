@@ -1,0 +1,36 @@
+# Environment variables
+.env
+
+# Node modules
+node_modules/
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Temporary files and logs
+*.log
+*.tmp
+
+# To-Do list
+To-Do.txt
+
+# Prettier configuration
+.prettierrc
+.prettierignore
+
+# Tailwind CSS configuration
+tailwind.config.js
+input.css
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled files
+dist/
+build/
+
+# IDE/editor specific files
+.vscode/
+.idea/
