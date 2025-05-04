@@ -5,13 +5,15 @@ import { ApiResponse } from "./ApiResponse.js";
 import { ApiError } from "./ApiError.js";
 import { asyncHandler } from "./asyncHandler.js";
 import Redis from "ioredis";
+import { Resend } from "resend";
 const redis = new Redis(); // Connects to the server running in my localhost:6379
 
 dotenv.config({
   path: "./.env"
 })
 
-sgMail.setApiKey(process.env.TWILIO_API_KEY);
+// sgMail.setApiKey(process.env.TWILIO_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 const sendOTP_ResetPass = asyncHandler(async (req, res) => {
   const { recipient } = req.body;
@@ -23,14 +25,9 @@ const sendOTP_ResetPass = asyncHandler(async (req, res) => {
     let result = await redis.del(`otp:${recipient}`)
     if (result != 1) throw new ApiError(505, "Cannot delete the previous OTP");
   }
-
   await redis.set(`otp:${recipient}`, OTP, 'EX', OTP_TTL); // Store OTP in Redis with expiration
-  const msg = {
-    to: recipient, // Change to your recipient
-    from: 'avishekadhikary42@gmail.com', // Change to your verified sender
-    subject: "I am from YouTube clone App",
-    text: "I do not what is this",
-    html: `<html>
+
+  const html = `<html>
         <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
           <div style="max-width: 600px; margin: auto; border: 1px solid #ddd;">
             <header style="background-color: #4CAF50; color: white; padding: 10px 20px;">
@@ -53,10 +50,16 @@ const sendOTP_ResetPass = asyncHandler(async (req, res) => {
             </footer>
           </div>
         </body>
-        </html>`
-  };
-  const mail = await sgMail.send(msg);
-  if (mail[0].statusCode > 399) throw new ApiError(505, "Cannot send OTP");
+    </html>`
+
+  const {data, error} = await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: recipient,
+    subject: "Videotubes | OTP to reset your password",
+    html: html
+  });
+
+  if (error) throw new ApiError(505, "Cannot send OTP");
 
   res.status(200).json(new ApiResponse(200, { status: mail[0].statusCode }, "OTP sent"))
 })
@@ -81,12 +84,8 @@ const sendOTP_CreateAcc = asyncHandler(async (req, res) => {
   }
 
   await redis.set(`otp:${recipient}`, OTP, 'EX', OTP_TTL); // Store OTP in Redis with expiration
-  const msg = {
-    to: recipient, // Change to your recipient
-    from: 'avishekadhikary42@gmail.com', // Change to your verified sender
-    subject: "I am from YouTube clone App",
-    text: "I do not what is this",
-    html: `<html>
+
+  let html = `<html>
         <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
           <div style="max-width: 600px; margin: auto; border: 1px solid #ddd;">
             <header style="background-color: #4CAF50; color: white; padding: 10px 20px;">
@@ -109,12 +108,19 @@ const sendOTP_CreateAcc = asyncHandler(async (req, res) => {
             </footer>
           </div>
         </body>
-        </html>`
-  };
-  const mail = await sgMail.send(msg);
-  if (mail[0].statusCode > 399) throw new ApiError(505, "Cannot send OTP");
+      </html>`
 
-  res.status(200).json(new ApiResponse(200, { status: mail[0].statusCode }, "OTP sent"))
+  const {data, error} = await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: recipient,
+    subject: "Videotubes | Verification Code",
+    html: html
+  })
+  console.log("Data", data)
+  console.log("Erro", error)
+  if (error) throw new ApiError(505, "Cannot send OTP");
+
+  res.status(200).json(new ApiResponse(200, { mailId: data.id }, "OTP sent"))
 })
 
 const verifyOTP = asyncHandler(async (req, res) => {
