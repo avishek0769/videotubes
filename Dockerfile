@@ -7,7 +7,7 @@ RUN apt-get install -y nodejs redis-server
 RUN apt-get upgrade
 RUN apt-get install -y nodejs
 
-COPY Backend Backend
+COPY Project Project
 
-RUN cd Backend  && \
+RUN cd Project  && \
     npm install
