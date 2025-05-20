@@ -55,11 +55,11 @@ cd Project
 npm install
 ```
 
-3. Build and run with Docker:
+<!-- 3. Build and run with Docker:
 ```bash
 docker build -t videotubes .
 docker run -p 3000:3000 videotubes
-```
+``` -->
 
 ## 🏗️ Project Structure
 
