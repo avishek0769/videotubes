@@ -25,11 +25,6 @@ const s3Client = new S3Client({
     }
 })
 
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
-});
 const ecs = new AWS.ECS({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID_2,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_2,
@@ -55,9 +50,10 @@ const waitForTaskCompletion = async (taskArn) => {
 const putObjectURL = asyncHandler(async (req, res) => {
     const { filename } = req.query;
     const command = new PutObjectCommand({
-        Bucket: "yt-clone.input.video",
+        Bucket: process.env.S3_INPUT_BUCKET_NAME,
         Key: `${filename}`,
-        ContentType: "video/mp4"
+        ContentType: "video/mp4",
+        StorageClass: 'INTELLIGENT_TIERING'
     })
     const url = await getSignedUrl(s3Client, command);
     res.status(200).json(new ApiResponse(200, { url }, "Signed URL generated !"))
@@ -66,9 +62,10 @@ const putObjectURL = asyncHandler(async (req, res) => {
 const thumbnailSignedURL = asyncHandler(async (req, res) => {
     const { filename, contentType } = req.query;
     const command = new PutObjectCommand({
-        Bucket: "thumbnail.bucket",
+        Bucket: process.env.S3_THUMBNAIL_BUCKET_NAME,
         Key: `${filename}`,
-        ContentType: `image/${contentType}`
+        ContentType: `image/${contentType}`,
+        StorageClass: 'INTELLIGENT_TIERING'
     })
     const url = await getSignedUrl(s3Client, command);
     res.status(200).json(new ApiResponse(200, { url }, "Signed URL generated !"))
@@ -105,8 +102,11 @@ const publishAVideo = asyncHandler(async (req, res) => {
                     {
                         name: process.env.ECS_CONTAINER_NAME,
                         environment: [
-                            { name: 'S3_KEY', value: objectKey },
-                            { name: 'FOLDER_NAME', value: folderName }
+                            { name: "S3_KEY", value: objectKey },
+                            { name: "FOLDER_NAME", value: folderName },
+                            { name: "AWS_ACCESS_KEY_ID", value: process.env.AWS_ACCESS_KEY_ID },
+                            { name: "AWS_SECRET_ACCESS_KEY", value: process.env.AWS_SECRET_ACCESS_KEY },
+                            { name: "AWS_DEFAULT_REGION", value: process.env.AWS_REGION },
                         ]
                     }
                 ]
@@ -114,8 +114,8 @@ const publishAVideo = asyncHandler(async (req, res) => {
             networkConfiguration: {
                 awsvpcConfiguration: {
                     subnets: [
-                        "subnet-0a4c4c37f473cff99",
-                        "subnet-077e0bc3bddecfc00"
+                        process.env.ECS_SUBNET_ID_1,
+                        process.env.ECS_SUBNET_ID_2
                     ],
                     assignPublicIp: 'ENABLED'
                 }
@@ -123,16 +123,16 @@ const publishAVideo = asyncHandler(async (req, res) => {
         };
     
         const runTaskResponse = await ecs.runTask(params).promise().catch(error => {
-            console.log("ECS Error --------> ", error);
+            console.log("ECS Error ---> ", error);
         });
-        console.log('ECS task triggered successfully');
         const taskArn = runTaskResponse.tasks[0].taskArn;
+        console.log('ECS task triggered successfully');
     
         const videoDocument = await Video.create({
             title,
             description: description ? description : "",
             thumbnail: thumbnailURL,
-            videoFile: `https://s3.amazonaws.com/yt-clone.output.video/${folderName}`,
+            videoFile: `https://s3.ap-south-1.amazonaws.com/${process.env.S3_OUTPUT_BUCKET_NAME}/${folderName}`,
             duration: duration || 0,
             owner: req.user._id,
             tags: tagsArr,
@@ -146,7 +146,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
         await videoDocument.save();
     }
     catch (error) {
-        res.status(505).json(new ApiResponse(505, {error: error.message}, "Failed to upload !"));
+        res.status(505).json(new ApiResponse(502, {error: error.message}, "Failed to upload !"));
     }
 })
 

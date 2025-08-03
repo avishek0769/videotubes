@@ -13,8 +13,8 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID_2,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_2,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     region: process.env.AWS_REGION
 });
 
@@ -37,7 +37,7 @@ async function deleteFolder(folderPrefix) {
     try {
         // List all objects with the folder prefix
         const listParams = {
-            Bucket: "yt-clone.output.video",
+            Bucket: S3_OUTPUT_BUCKET_NAME,
             Prefix: folderPrefix
         };
 
@@ -55,7 +55,7 @@ async function deleteFolder(folderPrefix) {
 
         // Delete all objects in the folder
         const deleteParams = {
-            Bucket: "yt-clone.output.video",
+            Bucket: S3_OUTPUT_BUCKET_NAME,
             Delete: {
                 Objects: listedObjects.Contents.map(object => ({ Key: object.Key }))
             }
@@ -74,7 +74,7 @@ async function deleteFolder(folderPrefix) {
 async function deleteFile(fileKey) {
     try {
         const deleteParams = {
-            Bucket: "thumbnail.bucket",
+            Bucket: process.env.S3_THUMBNAIL_BUCKET_NAME,
             Key: fileKey
         };
         await s3.deleteObject(deleteParams).promise();

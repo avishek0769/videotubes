@@ -1279,7 +1279,7 @@ saveUpload.addEventListener("click", async ()=>{
                         title: document.getElementById("title").value,
                         tags: document.getElementById("tags").value,
                         description: document.getElementById("description").value,
-                        thumbnailURL: `https://s3.amazonaws.com/thumbnail.bucket/${fileName}`
+                        thumbnailURL: `https://s3.ap-south-1.amazonaws.com/videotubes.thumbnail/${fileName}`
                     })
                 })
                 .then((response)=> {
