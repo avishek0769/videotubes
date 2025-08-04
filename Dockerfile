@@ -1,13 +1,24 @@
-FROM ubuntu
+FROM ubuntu:latest
 
-RUN apt-get update
-RUN apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
-RUN apt-get install -y nodejs redis-server
-RUN apt-get upgrade
-RUN apt-get install -y nodejs
+# Update package lists and install dependencies
+RUN apt-get update && apt-get install -y \
+    unzip \
+    tar \
+    gzip \
+    ffmpeg \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY Project Project
+# Install AWS CLI
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm -rf awscliv2.zip aws/
 
-RUN cd Project  && \
-    npm install
+WORKDIR /app
+
+COPY transcode.sh /app/transcode.sh
+RUN chmod +x /app/transcode.sh
+
+# Entry point to execute the script
+ENTRYPOINT ["/bin/bash", "/app/transcode.sh"]
