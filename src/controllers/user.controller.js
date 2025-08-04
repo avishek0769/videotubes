@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import fs from "fs";
 import { deleteFromCloud } from "../utils/DestroyFile.js"
 import mongoose from "mongoose"
+import { DOMAIN } from "../../public/Javascript/constant.js"
 
 const AccessOptions = {
     httpOnly: true,
@@ -166,7 +167,7 @@ const changeCurrentPassword = asyncHandler(async (req, res)=>{
     console.log(oldPassword, newPassword, otp, email);
     let user = await User.findById(req.user._id)
     if(otp){
-        const response = await fetch(`http://localhost:8000/api/v1/verify-OTP`, {
+        const response = await fetch(`${DOMAIN}/api/v1/verify-OTP`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
