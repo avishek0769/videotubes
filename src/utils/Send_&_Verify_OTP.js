@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import { User } from "../models/user.model.js"
-import sgMail from "@sendgrid/mail"
 import { ApiResponse } from "./ApiResponse.js";
 import { ApiError } from "./ApiError.js";
 import { asyncHandler } from "./asyncHandler.js";
@@ -13,10 +12,8 @@ dotenv.config({
     path: "./.env"
 })
 
-// sgMail.setApiKey(process.env.TWILIO_API_KEY);
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Helper function to clean expired OTPs
 const cleanExpiredOTPs = () => {
     const now = Date.now();
     for (const [key, value] of otpStore.entries()) {
@@ -26,16 +23,13 @@ const cleanExpiredOTPs = () => {
     }
 };
 
-// Helper function to store OTP with expiration
 const storeOTP = (recipient, otp, ttlSeconds) => {
     const expiresAt = Date.now() + (ttlSeconds * 1000);
     otpStore.set(`otp:${recipient}`, { otp, expiresAt });
 
-    // Clean expired OTPs periodically
     cleanExpiredOTPs();
 };
 
-// Helper function to get OTP if not expired
 const getOTP = (recipient) => {
     const stored = otpStore.get(`otp:${recipient}`);
     if (!stored) return null;
@@ -48,7 +42,6 @@ const getOTP = (recipient) => {
     return stored.otp;
 };
 
-// Helper function to delete OTP
 const deleteOTP = (recipient) => {
     return otpStore.delete(`otp:${recipient}`);
 };
@@ -56,14 +49,11 @@ const deleteOTP = (recipient) => {
 const sendOTP_ResetPass = asyncHandler(async (req, res) => {
     const { recipient } = req.body;
     const OTP = Math.floor((Math.random() * 9000)) + 1000;
-    const OTP_TTL = 100; // Time-to-Live in seconds
+    const OTP_TTL = 100;
 
-    // Check if OTP already exists and delete it
     if (otpStore.has(`otp:${recipient}`)) {
         deleteOTP(recipient);
     }
-
-    // Store new OTP with expiration
     storeOTP(recipient, OTP, OTP_TTL);
 
     const html = `<html>
@@ -92,7 +82,7 @@ const sendOTP_ResetPass = asyncHandler(async (req, res) => {
     </html>`
 
     const { data, error } = await resend.emails.send({
-        from: "team@nexus-network.tech",
+        from: "VideoTubes <noreply@avishekadhikary.tech>",
         to: recipient,
         subject: "Videotubes | OTP to reset your password",
         html: html
@@ -114,14 +104,11 @@ const sendOTP_CreateAcc = asyncHandler(async (req, res) => {
 
     const OTP = Math.floor((Math.random() * 9000)) + 1000;
     console.log(OTP);
-    const OTP_TTL = 100; // Time-to-Live in seconds
+    const OTP_TTL = 100;
 
-    // Check if OTP already exists and delete it
     if (otpStore.has(`otp:${recipient}`)) {
         deleteOTP(recipient);
     }
-
-    // Store new OTP with expiration
     storeOTP(recipient, OTP, OTP_TTL);
 
     let html = `<html>
@@ -150,7 +137,7 @@ const sendOTP_CreateAcc = asyncHandler(async (req, res) => {
       </html>`
 
     const { data, error } = await resend.emails.send({
-        from: "VideoTubes <team@nexus-network.tech>",
+        from: "VideoTubes <noreply@avishekadhikary.tech>",
         to: recipient,
         subject: "Videotubes | Verification Code",
         html: html
@@ -169,10 +156,9 @@ const verifyOTP = asyncHandler(async (req, res) => {
     console.log("Recipient-->", recipient);
     console.log("OTP-->", otp);
 
-    const storedOTP = getOTP(recipient); // Retrieve the stored OTP
+    const storedOTP = getOTP(recipient);
 
     if (storedOTP && storedOTP == otp) {
-        // Delete OTP after successful verification
         deleteOTP(recipient);
         res.status(200).json(new ApiResponse(200, null, "OTP verified"));
     }
