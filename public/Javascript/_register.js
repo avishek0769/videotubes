@@ -34,8 +34,13 @@ verifyEmail.addEventListener("click", () => {
             body: JSON.stringify({ recipient: email, otp: otp.value })
         })
         .then((response) => {
+            if (response.status === 400) {
+                message.innerHTML = `<span class="text-red-500">OTP has expired</span>`;
+                verifyEmail.disabled = false;
+                return undefined;
+            }
             if (response.status > 399) {
-                message.innerHTML = message.innerHTML + " Invalid OTP";
+                message.innerHTML = `<span class="text-red-500">Invalid OTP</span>`;
                 verifyEmail.disabled = false;
                 return undefined;
             }
@@ -66,27 +71,41 @@ countDownFunc()
 // ************************************************ CREATING ACCOUNT WITH ALL VALIDATION **********************************************
 createAcc.addEventListener("click", async (e) => {
     e.preventDefault();
-    document.getElementById("bufferingDiv").classList.replace("hidden", "flex")
+
+    const showPopup = (msg) => {
+        popUp.innerText = msg;
+        popUp.classList.add("flex");
+        popUp.classList.remove("hidden");
+        setTimeout(() => {
+            popUp.classList.remove("flex");
+            popUp.classList.add("hidden");
+        }, 2500);
+    };
+
+    if (!fullname.value.trim() || !username.value.trim() || !password.value || !avatar.files.length) {
+        showPopup("All fields are required except cover image!");
+        return;
+    }
+
+    if (password.value.length < 6) {
+        showPopup("Password must be at least 6 characters long");
+        return;
+    }
+
+    document.getElementById("bufferingDiv").classList.replace("hidden", "flex");
     let formData = new FormData(document.getElementById("profileForm"));
     
-    if (fullname.value && username.value && password.value && avatar.files.length) {
-        fetch(`${DOMAIN}/api/v1/users/register`, {
-            method: "POST",
-            body: formData
-        }).then((res)=> res.json())
-        .then((data)=>{
-            document.getElementById("bufferingDiv").classList.replace("flex", "hidden")
-            window.location.href = "/Log_in";
-        })
-    }
-    else {
-        popUp.classList.add("flex")
-        popUp.classList.remove("hidden")
-        setTimeout(() => {
-            popUp.classList.remove("flex")
-            popUp.classList.add("hidden")
-        }, 2500);
-    }
+    fetch(`${DOMAIN}/api/v1/users/register`, {
+        method: "POST",
+        body: formData
+    }).then((res)=> res.json())
+    .then((data)=>{
+        document.getElementById("bufferingDiv").classList.replace("flex", "hidden");
+        window.location.href = "/Log_in";
+    }).catch(() => {
+        document.getElementById("bufferingDiv").classList.replace("flex", "hidden");
+        showPopup("Something went wrong!");
+    });
 })
 
 // ************************************************ USERNAME CHECK **********************************************

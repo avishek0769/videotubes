@@ -56,7 +56,7 @@
             <button id="verifyEmail" class="bg-[#ae7aff] disabled:bg-purple-300 px-4 py-3 text-black">Verify Email</button>
             
 
-            <form id="profileForm" class="mx-auto my-3 hidden w-full max-w-sm flex-col">
+            <form id="profileForm" class="mx-auto my-3 flex w-full max-w-sm flex-col">
                 <input type="email" name="email" id="emailInput" class="hidden">
                 <label for="fullname" class=" mb-1 inline-block text-gray-300">Fullname*</label>
                 <input id="fullname" type="text" name="fullName" placeholder="Enter your fullname" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
@@ -68,13 +68,18 @@
                 <label for="password" class="mb-1 inline-block text-gray-300">Password*</label>
                 <input id="password" type="text" name="password" placeholder="Enter your password" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
 
-                <div class="flex justify-between">
-                    <label for="avatar" class="mb-1 text-gray-300">Avatar*</label>
-                    <label for="coverImage"  class="mb-1 text-gray-300">Cover image</label>
-                </div>
-                <div class="flex">
-                    <input id="avatar" type="file" name="avatar" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
-                    <input id="coverImage"  name="coverImage" type="file" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
+                <div class="flex flex-col gap-5 mb-6">
+                    <div class="w-full">
+                        <label for="avatar" class="mb-2 block text-sm font-medium text-gray-300">Avatar*</label>
+                        <input id="avatar" type="file" name="avatar" accept="image/*"
+                            class="block w-full text-sm text-gray-400 border border-gray-600 rounded-lg cursor-pointer bg-transparent focus:outline-none focus:border-[#ae7aff] file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-[#ae7aff] file:text-black hover:file:bg-[#9a6eea] transition-all duration-300" />
+                    </div>
+
+                    <div class="w-full">
+                        <label for="coverImage" class="mb-2 block text-sm font-medium text-gray-300">Cover Image</label>
+                        <input id="coverImage" name="coverImage" type="file" accept="image/*"
+                            class="block w-full text-sm text-gray-400 border border-gray-600 rounded-lg cursor-pointer bg-transparent focus:outline-none focus:border-[#ae7aff] file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-[#ae7aff] file:text-black hover:file:bg-[#9a6eea] transition-all duration-300" />
+                    </div>
                 </div>
 
                 <button id="createAcc" class="bg-[#ae7aff] px-4 py-3 text-black">Create Account</button>

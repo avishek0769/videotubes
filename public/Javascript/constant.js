@@ -1,1 +1,1 @@
-export const DOMAIN = "https://videotubes.app";
+export const DOMAIN = "https://9vkj509k-8000.inc1.devtunnels.ms";
