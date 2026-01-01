@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 import { v2 as cloudinary } from "cloudinary"
-import AWS from "aws-sdk"
 import { ApiError } from "./ApiError.js"
+import { DeleteObjectCommand, DeleteObjectsCommand, ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3"
 
 dotenv.config({
     path: './.env'
@@ -12,10 +12,12 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
-const s3 = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION
+const s3 = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
 });
 
 const deleteFromCloud = async (publicURL, resourceType) => {
@@ -43,7 +45,7 @@ async function deleteFolder(folderPrefix) {
 
         console.log('Listing objects with params:', listParams);
 
-        const listedObjects = await s3.listObjectsV2(listParams).promise();
+        const listedObjects = await s3.send(new ListObjectsV2Command(listParams));
 
         // Debugging output
         console.log('Listed Objects:', listedObjects);
@@ -63,7 +65,7 @@ async function deleteFolder(folderPrefix) {
 
         console.log('Deleting objects with params:', deleteParams);
 
-        await s3.deleteObjects(deleteParams).promise();
+        await s3.send(new DeleteObjectsCommand(deleteParams));
         console.log('Folder deleted successfully');
     }
     catch (error) {
@@ -77,7 +79,7 @@ async function deleteFile(fileKey) {
             Bucket: process.env.S3_THUMBNAIL_BUCKET_NAME,
             Key: fileKey
         };
-        await s3.deleteObject(deleteParams).promise();
+        await s3.send(new DeleteObjectCommand(deleteParams));
         console.log(`File ${fileKey} deleted successfully`);
     }
     catch (error) {

@@ -11,11 +11,10 @@ import { Comment } from "../models/comment.model.js"
 import { View } from "../models/views.model.js"
 import { Playlist } from "../models/playlist.model.js"
 import nlp from "compromise";
-import AWS from "aws-sdk"
-import fs from "fs"
 import { v4 as uuidv4 } from "uuid"
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { ECSClient, RunTaskCommand, waitUntilTasksStopped } from "@aws-sdk/client-ecs"
 
 const s3Client = new S3Client({
     region: process.env.AWS_REGION,
@@ -25,26 +24,28 @@ const s3Client = new S3Client({
     }
 })
 
-const ecs = new AWS.ECS({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID_2,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_2,
-    region: process.env.AWS_REGION
+const ecs = new ECSClient({
+    region: process.env.AWS_REGION,
+    credentials: {
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID_2,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_2
+    }
 });
 
 const waitForTaskCompletion = async (taskArn) => {
-    let taskStatus = 'PENDING';
-    let result;
-    while (taskStatus !== 'STOPPED') {
-        result = await ecs.describeTasks({
-            cluster: process.env.ECS_CLUSTER_NAME,
-            tasks: [taskArn]
-        }).promise();
+    const cluster = process.env.ECS_CLUSTER_NAME;
 
-        taskStatus = result.tasks[0].lastStatus;
-        if (taskStatus !== 'STOPPED') {
-            await new Promise(resolve => setTimeout(resolve, 5000)); // wait for 5 seconds before checking again
+    await waitUntilTasksStopped(
+        {
+            client: ecs,
+            maxWaitTime: 600 * 3,
+            minDelay: 5,
+        },
+        {
+            cluster,
+            tasks: [taskArn],
         }
-    }
+    );
 };
 
 const putObjectURL = asyncHandler(async (req, res) => {
@@ -122,9 +123,11 @@ const publishAVideo = asyncHandler(async (req, res) => {
             }
         };
     
-        const runTaskResponse = await ecs.runTask(params).promise().catch(error => {
-            console.log("ECS Error ---> ", error);
-        });
+        const runTaskResponse = await ecs.send(new RunTaskCommand(params));
+        if (runTaskResponse.failures && runTaskResponse.failures.length > 0) {
+            console.error("ECS Task failed to start:", runTaskResponse.failures);
+            throw new Error("ECS Task launch failed");
+        }
         const taskArn = runTaskResponse.tasks[0].taskArn;
         console.log('ECS task triggered successfully');
     

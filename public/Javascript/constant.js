@@ -1,1 +1,1 @@
-export const DOMAIN = "https://www.videotubes.app";
+export const DOMAIN = "https://videotubes.app";

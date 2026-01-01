@@ -12,12 +12,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/uuid": "^10.0.0",
     "prettier": "^3.2.5"
   },
   "dependencies": {
+    "@aws-sdk/client-ecs": "^3.958.0",
     "@aws-sdk/client-s3": "^3.614.0",
     "@aws-sdk/s3-request-presigner": "^3.614.0",
-    "aws-sdk": "^2.1659.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.2.0",
     "compromise": "^14.13.0",

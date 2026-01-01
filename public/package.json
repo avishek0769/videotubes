@@ -6,6 +6,7 @@
   "scripts": {
     "css": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
