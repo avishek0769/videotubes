@@ -118,11 +118,11 @@ const populatePostComment = (data)=>{
                     </div>
                     <div class="absolute right-0"><span class="CP_threeDots text-white text-[1.4rem] material-symbols-outlined mt-4 cursor-pointer transition-transform transform duration-150">more_vert</span></div>
         
-                    <div data-commentid=${comment._id} class="CP_dotDiv bg-black hidden border border-[#ae7aff] absolute z-50 right-6 bottom-[-1.5rem] rounded-md ">
-                        <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">report</span>Report</div>
-                        <div class="editComm ${comment.commenter._id != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">edit</span>Edit</div>
-                        <div class="pinComm flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">keep</span>Pin</div>
-                        <div class="deleteComm ${comment.commenter._id != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">delete</span>Delete</div>
+                    <div data-commentid=${comment._id} class="CP_dotDiv glass-card hidden border border-white/10 absolute z-50 right-6 bottom-[-1.5rem] rounded-xl ">
+                        <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">report</span>Report</div>
+                        <div class="editComm ${comment.commenter._id != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">edit</span>Edit</div>
+                        <div class="pinComm flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">keep</span>Pin</div>
+                        <div class="deleteComm ${comment.commenter._id != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">delete</span>Delete</div>
                     </div>
                 </div>
             `
@@ -242,10 +242,10 @@ contentSections.forEach((elem)=>{
 
         contentSections.forEach((section)=>{
             section.classList.add("border-transparent", "text-gray-400")
-            section.classList.remove("border-[#ae7aff]", "bg-white", "text-[#ae7aff]")
+            section.classList.remove("border-[#ae7aff]", "bg-white/10", "text-[#ae7aff]")
         })
         elem.classList.remove("border-transparent", "text-gray-400");
-        elem.classList.add("border-[#ae7aff]", "bg-white", "text-[#ae7aff]");
+        elem.classList.add("border-[#ae7aff]", "bg-white/10", "text-[#ae7aff]");
     })
 })
 
@@ -278,10 +278,10 @@ contentSections1.forEach((elem)=>{
 
         contentSections1.forEach((section)=>{
             section.classList.add("border-transparent", "text-gray-400")
-            section.classList.remove("border-[#ae7aff]", "bg-white", "text-[#ae7aff]")
+            section.classList.remove("border-[#ae7aff]", "bg-white/10", "text-[#ae7aff]")
         })
         elem.classList.remove("border-transparent", "text-gray-400");
-        elem.classList.add("border-[#ae7aff]", "bg-white", "text-[#ae7aff]");
+        elem.classList.add("border-[#ae7aff]", "bg-white/10", "text-[#ae7aff]");
     })
 })
 
@@ -304,18 +304,18 @@ const getVideos = (channelID)=>{
                                 <div data-videoid=${video._id} class="video absolute inset-0">
                                     <img src=${video.thumbnail} alt="JavaScript Fundamentals: Variables and Data Types" class="thumbnailChange h-full w-full object-cover object-center" />
                                 </div>
-                                <span class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                                <span class="duration-badge">${formatDuration(video.duration)}</span>
                             </div>
                             <h6 class="titleChange mb-1 font-semibold">${video.title.length > 54? video.title + "..." : video.title}</h6>
                             <p class="flex justify-between text-sm text-gray-200">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)} <span class="editVideoBtn transition-transform transform duration-150 material-symbols-outlined cursor-pointer ">more_vert</span></p>
     
-                            <div class="dotDivVideo hidden bg-black border border-[#ae7aff] absolute right-8 bottom-1 rounded-md ">
-                                <div class="deleteVideo ${URLchannelID != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete Video</div>
-                                <div class="editVideo ${URLchannelID != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit Video</div>
-                                <div class="addVideo flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">add_box</span>Add to playlist</div>
+                            <div class="dotDivVideo hidden glass-card border border-white/10 absolute right-8 bottom-1 rounded-xl ">
+                                <div class="deleteVideo ${URLchannelID != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete Video</div>
+                                <div class="editVideo ${URLchannelID != currentUserID? "hidden" : "flex"} items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit Video</div>
+                                <div class="addVideo flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">add_box</span>Add to playlist</div>
                             </div>
     
-                            <div class="playlistDropDown absolute right-8 top-3 z-10 w-64 overflow-hidden rounded-lg bg-[#121212] p-4 shadow shadow-slate-50/30 hidden">
+                            <div class="playlistDropDown absolute right-8 top-3 z-10 w-64 overflow-hidden rounded-lg bg-[#0f0f0f] p-4 shadow-lg hidden">
                                 <h3 class="flex justify-between items-center mb-3 text-center text-lg font-semibold">Save to playlist <span class="crossSaveToPlay cursor-pointer h-5 text-[#ae7aff] material-symbols-outlined">cancel</span> </h3>
                                 <div  class="mb-4">
                                     <ul class="playlistNameSection max-h-[8rem] overflow-auto custom-scrollbar">  </ul>
@@ -648,8 +648,8 @@ const getPlaylists = (channelID)=>{
                             <p class="description flex text-sm text-gray-200">${playlist.description}</p>
 
                             <div class="dotDiv bg-black hidden border border-[#ae7aff] absolute right-6 bottom-1 rounded-md ">
-                                <div class="deletePlaylist flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
-                                <div class="editPlaylist flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
+                                <div class="deletePlaylist flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
+                                <div class="editPlaylist flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
                             </div>
                         </div>
                 `
@@ -823,8 +823,8 @@ const getPosts = (channelID)=>{
                                 </button>
                             </div>
                             <div class="dotDivPost hidden bg-black border border-[#ae7aff] absolute right-8 top-5 rounded-md">
-                                <div class="deletePost flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete Post</div>
-                                <div class="editPost flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit Post</div>
+                                <div class="deletePost flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete Post</div>
+                                <div class="editPost flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit Post</div>
                             </div>
                         </div>
                     </div>
@@ -999,7 +999,7 @@ const getPosts = (channelID)=>{
                                 .then((data)=>{
                                     addCommPost.value = ""
                                     let html = `
-                                        <div class="flex gap-x-4 border-b pb-2 pt-1 relative">
+                                        <div class="flex gap-x-4 border-b border-white/[0.08] pb-3 pt-2 relative">
                                             <div class="commenter mt-2 h-11 w-11 shrink-0">
                                                 <img src=${currentAvatar} alt="sarahjv" class="h-full w-full rounded-full object-cover object-center" />
                                             </div>
@@ -1014,11 +1014,11 @@ const getPosts = (channelID)=>{
                                             </div>
                                             <div class="absolute right-0"><span class="CP_threeDots text-white text-[1.4rem] material-symbols-outlined mt-4 cursor-pointer transition-transform transform duration-150">more_vert</span></div>
                                 
-                                            <div data-commentid=${data.data._id} class="CP_dotDiv bg-black hidden border border-[#ae7aff] absolute z-50 right-6 bottom-[-1.5rem] rounded-md ">
-                                                <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">report</span>Report</div>
-                                                <div class="editComm flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">edit</span>Edit</div>
-                                                <div class="pinComm flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">keep</span>Pin</div>
-                                                <div class="deleteComm flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem] text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">delete</span>Delete</div>
+                                            <div data-commentid=${data.data._id} class="CP_dotDiv glass-card hidden border border-white/10 absolute z-50 right-6 bottom-[-1.5rem] rounded-xl ">
+                                                <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">report</span>Report</div>
+                                                <div class="editComm flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">edit</span>Edit</div>
+                                                <div class="pinComm flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">keep</span>Pin</div>
+                                                <div class="deleteComm flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 text-white"><span class="text-[#ae7aff] mr-2 h-5 material-symbols-outlined">delete</span>Delete</div>
                                             </div>
                                         </div>
                                     `

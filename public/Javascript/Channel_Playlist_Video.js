@@ -26,7 +26,7 @@ fetch(`${DOMAIN}/api/v1/playlist/p/${playlistID}`).then((response) => {
 
     let promises = playlist.videos.map(async video => {
       let html = `
-        <div class="border relative">
+        <div class="video-card p-2 rounded-xl relative">
             <div class="w-full max-w-3xl gap-x-4 sm:flex">
               <div data-videoid=${video._id} class="video relative mb-2 w-full sm:mb-0 sm:w-5/12">
                 <div class="w-full pt-[56%]">
@@ -36,7 +36,7 @@ fetch(`${DOMAIN}/api/v1/playlist/p/${playlistID}`).then((response) => {
                       alt="JavaScript Fundamentals: Variables and Data Types"
                       class="h-full w-full object-cover object-center"  />
                   </div>
-                  <span class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                  <span class="duration-badge">${formatDuration(video.duration)}</span>
                 </div>
               </div>
               <div class="flex gap-x-2 px-2 sm:w-7/12 sm:px-0">
@@ -64,9 +64,9 @@ fetch(`${DOMAIN}/api/v1/playlist/p/${playlistID}`).then((response) => {
                 </div>
               </div>
             </div>
-            <div class="dotDiv bg-[#000000] hidden border border-[#ae7aff] absolute right-8 bottom-3 sm:bottom-24 rounded-md ">
-              <div class=" flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Report</div>
-              <div class="removeVideo flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Remove</div>
+            <div class="dotDiv glass-card hidden border border-white/10 absolute right-8 bottom-3 sm:bottom-24 rounded-xl ">
+              <div class=" flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Report</div>
+              <div class="removeVideo flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Remove</div>
             </div>
           </div>
         `

@@ -39,30 +39,30 @@ fetch(`${DOMAIN}/api/v1/videos/search`, {
     }
     let promises = data.data.map(async video => {
         let html = `
-    <div class="w-full max-w-3xl gap-x-4 md:flex">
+    <div class="w-full max-w-3xl gap-x-4 md:flex video-card p-2 rounded-xl">
                             <div class="relative mb-2 w-full md:mb-0 md:w-5/12">
                                 <div class="w-full pt-[56%]">
-                                    <div data-videoid=${video._id} class="video absolute inset-0"><img
+                                    <div data-videoid=${video._id} class="video absolute inset-0 rounded-xl overflow-hidden"><img
                                             src=${video.thumbnail}
                                             class="h-full w-full object-cover object-center" />
                                     </div><span
-                                        class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                                        class="duration-badge">${formatDuration(video.duration)}</span>
                                 </div>
                             </div>
-                            <div class="flex gap-x-2 md:w-7/12">
+                            <div class="flex gap-x-2 md:w-7/12 pt-2 md:pt-0">
                                 <div class="h-10 w-10 shrink-0 md:hidden"><img
                                         src=${video.owner.avatar}
-                                        alt="codemaster" class="h-full w-full rounded-full object-cover object-center" /></div>
+                                        alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" /></div>
                                 <div class="w-full">
-                                    <h6 class="mb-1 font-semibold md:max-w-[75%]">${video.title}</h6>
-                                    <p class="flex text-sm text-gray-200 sm:mt-3">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
+                                    <h6 class="mb-1 font-semibold md:max-w-[75%] line-clamp-2">${video.title}</h6>
+                                    <p class="flex text-sm text-gray-400 sm:mt-3">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
                                     <div class="flex items-center gap-x-4">
                                         <div class="mt-2 hidden h-10 w-10 shrink-0 md:block"><img
                                                 src=${video.owner.avatar}
-                                                alt="codemaster" class="h-full w-full rounded-full object-cover object-center" /></div>
-                                        <p class="text-sm text-gray-200">${video.owner.fullName}</p>
+                                                alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" /></div>
+                                        <p class="text-sm text-gray-400">${video.owner.fullName}</p>
                                     </div>
-                                    <p class="mt-2 hidden text-sm md:block">${video.description}</p>
+                                    <p class="mt-2 hidden text-sm text-gray-500 md:block line-clamp-2">${video.description}</p>
                                 </div>
                             </div>
                         </div>

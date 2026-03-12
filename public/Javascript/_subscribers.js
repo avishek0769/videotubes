@@ -11,15 +11,15 @@ fetch(`${DOMAIN}/api/v1/subscription/get-subs/${channelID}?pageNo=1&limit=15`).t
     console.log(data);
     data.data.forEach(sub => {       
         let html = `
-            <div class="flex main mb-2 p-2 rounded-xl bg-[#ffffff17] w-full justify-between">
-                                <div class="flex items-center gap-x-2">
+            <div class="flex main mb-2 p-3 rounded-xl glass-card border border-white/[0.06] w-full justify-between hover:border-white/10 transition-colors">
+                                <div class="flex items-center gap-x-3">
                                     <div class="h-14 w-14 shrink-0">
                                         <img src=${sub.subscriber.avatar }
-                                            alt="React Patterns" class="h-full w-full rounded-full object-cover object-center" />
+                                            alt="${sub.subscriber.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" />
                                         </div>
                                     <div class="block">
                                         <h6 class="name font-semibold">${sub.subscriber.fullName}</h6>
-                                        <p class="text-sm text-gray-300"> </p>
+                                        <p class="text-sm text-gray-400"> </p>
                                     </div>
                                 </div>
                             </div>
@@ -54,15 +54,15 @@ loadMore.addEventListener("click", ()=>{
         console.log(data);
         data.data.forEach(sub => {       
             let html = `
-                <div class="flex main mb-2 p-2 rounded-xl bg-[#ffffff17] w-full justify-between">
-                                    <div class="flex items-center gap-x-2">
+                <div class="flex main mb-2 p-3 rounded-xl glass-card border border-white/[0.06] w-full justify-between hover:border-white/10 transition-colors">
+                                    <div class="flex items-center gap-x-3">
                                         <div class="h-14 w-14 shrink-0">
                                             <img src=${sub.subscriber.avatar }
-                                                alt="React Patterns" class="h-full w-full rounded-full object-cover object-center" />
+                                                alt="${sub.subscriber.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" />
                                             </div>
                                         <div class="block">
                                             <h6 class="name font-semibold">${sub.subscriber.fullName}</h6>
-                                            <p class="text-sm text-gray-300"> </p>
+                                            <p class="text-sm text-gray-400"> </p>
                                         </div>
                                     </div>
                                 </div>

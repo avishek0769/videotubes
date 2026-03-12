@@ -8,31 +8,33 @@
     <link rel="stylesheet" href="../src/output.css">
 </head>
 
-<body>
-    <div id="bufferingDiv" class="hidden flex-col gap-3 items-center absolute z-50 w-screen h-screen justify-center bg-[#000000bd]">
-        <div id="showMessage" class="text-white text-2xl text-center font-bold"> Please wiat </div>
-        <dotlottie-player src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 70px; height: 70px;" loop autoplay></dotlottie-player>
+<body class="custom-scrollbar">
+    <!-- Loading Overlay -->
+    <div id="bufferingDiv" class="hidden flex-col gap-3 items-center fixed inset-0 z-[60] justify-center bg-black/70 backdrop-blur-sm">
+        <div id="showMessage" class="text-white text-xl text-center font-semibold tracking-wide">Please wait</div>
+        <dotlottie-player src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 60px; height: 60px;" loop autoplay></dotlottie-player>
     </div>
 
-    <div id="ConfirmLogOut" class="hidden absolute z-50 w-screen h-screen justify-center items-center bg-[#0000008b]">
-        <div class="w-[18rem] sm:w-auto bg-black border border-[#ae7aff] px-6 py-5 z-50 rounded-lg">
-            <div class="text-white font-medium text-lg pb-5">Are you sure you want to Log out ?</div>
-            <div class="space-x-6">
-                <button id="yesLogOut" class="rounded-full px-5 py-1 bg-red-500 hover:bg-red-400 font-semibold">Yes</button>
-                <button id="noLogOut" class="rounded-full bg-[#ffffff9a] hover:bg-[#ffffffab] px-5 py-1">No</button>
+    <!-- Logout Confirmation -->
+    <div id="ConfirmLogOut" class="hidden fixed inset-0 z-[60] justify-center items-center bg-black/60 backdrop-blur-sm">
+        <div class="modal-card animate-scale-in">
+            <div class="text-white font-medium text-lg pb-5">Are you sure you want to log out?</div>
+            <div class="flex gap-3">
+                <button id="yesLogOut" class="btn-danger">Yes, Log out</button>
+                <button id="noLogOut" class="btn-cancel">Cancel</button>
             </div>
         </div>
     </div>
 
-    <div data-layout-wrapper class="h-screen overflow-y-auto bg-[#121212] text-white">
+    <div data-layout-wrapper class="h-screen overflow-y-auto bg-[#0f0f0f] text-white custom-scrollbar">
         <div data-layout-content class="flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]">
-            <section class="relative w-full pb-[7rem] sm:ml-[70px] sm:pb-9 lg:ml-0">
-                <div id="showAllVideo" class="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-4 p-4">
+            <section class="relative w-full pb-[5rem] sm:ml-[70px] sm:pb-9 lg:ml-0">
+                <div id="showAllVideo" class="grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] gap-5 p-4 sm:p-6">
                 </div>
                 <div id="bufferingDiv1" class="flex flex-col gap-3 items-center mb-12 justify-center">
-                    <dotlottie-player src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 50px; height: 50px;" loop autoplay></dotlottie-player>
+                    <dotlottie-player src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 40px; height: 40px;" loop autoplay></dotlottie-player>
                 </div>
-                <div id="loadMore" class="absolute left-1/2 -translate-x-1/2 bottom-[4.7rem] sm:bottom-0 p-2 cursor-pointer text-[#ae7aff] font-medium text-lg">Load more</div>
+                <div id="loadMore" class="absolute left-1/2 -translate-x-1/2 bottom-[4.7rem] sm:bottom-2 py-2 px-6 cursor-pointer text-[#ae7aff] font-semibold text-sm rounded-full bg-[#ae7aff]/10 border border-[#ae7aff]/20 transition-all duration-300 hover:bg-[#ae7aff]/20 hover:shadow-[0_0_15px_rgba(174,122,255,0.2)]">Load more</div>
             </section>
         </div>
     </div>

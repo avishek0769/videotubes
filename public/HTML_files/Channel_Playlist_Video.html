@@ -4,53 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>VideoTubes - Playlist</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="../src/output.css">
 </head>
 
-<body>
+<body class="custom-scrollbar">
     <!-- Remove Playlist Video Confirmation -->
-    <div id="removeP_Video" data-videoid="" class="hidden absolute z-50 w-screen h-screen justify-center items-center bg-[#0000008b]">
-        <div class="w-[18rem] sm:w-auto bg-black border border-[#ae7aff] px-6 py-5 z-50 rounded-lg">
-            <div class="text-white font-medium text-lg pb-5">Are you sure you want to remove this video ?</div>
-            <div class="space-x-6">
-                <button id="yesRemove" class="rounded-full px-5 py-1 bg-red-500 hover:bg-red-400 font-semibold">Yes</button>
-                <button id="noRemove" class="rounded-full bg-[#ffffff9a] hover:bg-[#ffffffab] px-5 py-1">No</button>
+    <div id="removeP_Video" data-videoid="" class="hidden fixed inset-0 z-[60] justify-center items-center bg-black/60 backdrop-blur-sm">
+        <div class="modal-card animate-scale-in">
+            <div class="text-white font-medium text-lg pb-5">Are you sure you want to remove this video?</div>
+            <div class="flex gap-3">
+                <button id="yesRemove" class="btn-danger">Yes, Remove</button>
+                <button id="noRemove" class="btn-cancel">Cancel</button>
             </div>
         </div>
     </div>
 
-    <div class="h-screen overflow-y-auto bg-[#121212] text-white" data-layout-wrapper>
+    <div class="h-screen overflow-y-auto bg-[#0f0f0f] text-white custom-scrollbar" data-layout-wrapper>
         <div class="flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]" data-layout-content>
-            <section class="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-                <div class="flex flex-wrap gap-x-4 gap-y-10 p-4 xl:flex-nowrap">
+            <section class="w-full pb-[5rem] sm:ml-[70px] sm:pb-0 lg:ml-0">
+                <div class="flex flex-wrap gap-x-6 gap-y-8 p-4 sm:p-6 xl:flex-nowrap">
+                    <!-- Playlist Info Card -->
                     <div class="w-full shrink-0 sm:max-w-md xl:max-w-sm">
-                        <div class="relative mb-2 w-full pt-[56%]">
-                            <div class="absolute inset-0"><img id="playlistCover" alt="React Mastery" class="h-full w-full" />
+                        <div class="relative mb-3 w-full pt-[56%] rounded-2xl overflow-hidden">
+                            <div class="absolute inset-0">
+                                <img id="playlistCover" alt="Playlist Cover" class="h-full w-full" />
                                 <div class="absolute inset-x-0 bottom-0">
-                                    <div class="relative border-t bg-white/30 p-4 text-white backdrop-blur-sm before:absolute before:inset-0 before:bg-black/40">
+                                    <div class="relative border-t border-white/10 bg-white/10 p-4 text-white backdrop-blur-md">
                                         <div class="relative z-[1]">
-                                            <p class="flex justify-between"><span class="inline-block">Playlist</span>
-                                                <span id="videosLen" class="inline-block"></span>
+                                            <p class="flex justify-between text-sm font-medium">
+                                                <span>Playlist</span>
+                                                <span id="videosLen" class="text-[#ae7aff]"></span>
                                             </p>
-                                            <p id="p_CreatedAt" class="text-sm text-gray-200"> </p>
+                                            <p id="p_CreatedAt" class="text-xs text-gray-300 mt-0.5"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <h6 id="playlistName" class="mb-1 font-semibold"> </h6>
-                        <p id="playlistDesc" class="flex text-sm text-gray-200"> </p>
-                        <div class="mt-6 flex items-center gap-x-3">
-                            <div class="h-16 w-16 shrink-0"><img id="ownerAvatar" alt="React Patterns" class="h-full w-full rounded-full" /></div>
+                        <h6 id="playlistName" class="mb-1 font-bold text-lg"></h6>
+                        <p id="playlistDesc" class="text-sm text-gray-400 leading-relaxed"></p>
+                        <div class="mt-5 flex items-center gap-x-3">
+                            <div class="h-12 w-12 shrink-0">
+                                <img id="ownerAvatar" alt="Channel" class="h-full w-full rounded-full ring-2 ring-white/10" />
+                            </div>
                             <div class="w-full">
-                                <h6 id="channelName" class="font-semibold"> </h6>
-                                <p id="noOfSubs" class="text-sm text-gray-300">757K Subscribers</p>
+                                <h6 id="channelName" class="font-semibold text-sm"></h6>
+                                <p id="noOfSubs" class="text-xs text-gray-400"></p>
                             </div>
                         </div>
                     </div>
-                    <div id="playlist_Videos" class="flex w-full flex-col gap-y-4"></div>
+                    <!-- Playlist Videos -->
+                    <div id="playlist_Videos" class="flex w-full flex-col gap-y-3"></div>
                 </div>
             </section>
         </div>

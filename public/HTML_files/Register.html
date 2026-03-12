@@ -4,88 +4,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>VideoTubes - Sign up</title>
     <link rel="stylesheet" href="../src/output.css">
 </head>
 
-<body>
-    <div id="bufferingDiv" class="hidden flex-col gap-3 items-center absolute z-50 w-screen h-screen justify-center bg-[#000000bd] ">
-        <div id="showMessage" class="text-white text-2xl text-center font-bold"> Please wait... </div>
-        <dotlottie-player class="" src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 70px; height: 70px;" loop autoplay></dotlottie-player>
-    </div>
-    
-    <div class="h-screen overflow-y-auto bg-[#121212] text-white">
-        <div id="popUp" class="w-screen h-14 hidden justify-center text-red-400 text-2xl text-center pt-6">All Feilds are required except cover image !</div>
-        <div class="mx-auto my-8 flex w-full max-w-sm flex-col px-4">
-            <div class="mx-auto inline-block w-16"><svg style="width:100%" viewBox="0 0 63 64" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M47.25 47.458C55.9485 38.7595 55.9485 24.6565 47.25 15.958C38.5515 7.25952 24.4485 7.25952 15.75 15.958C7.05151 24.6565 7.05151 38.7595 15.75 47.458C24.4485 56.1565 38.5515 56.1565 47.25 47.458Z"
-                        stroke="#E9FCFF" stroke-width="1.38962" stroke-miterlimit="10"></path>
-                    <path
-                        d="M10.5366 47.7971V17.5057C10.5366 16.9599 11.1511 16.6391 11.599 16.9495L33.4166 32.0952C33.8041 32.3639 33.8041 32.9368 33.4166 33.2076L11.599 48.3533C11.1511 48.6657 10.5366 48.3429 10.5366 47.7971Z"
-                        stroke="url(#paint0_linear_53_10115)" stroke-width="6.99574" stroke-miterlimit="10"
-                        stroke-linecap="round"></path>
-                    <path
-                        d="M18.1915 27.6963C20.1641 27.6963 21.7285 28.7066 21.7285 30.9021C21.7285 33.0976 20.1621 34.2433 18.1915 34.2433H16.8854V37.8677H14.1733V27.6984H18.1915V27.6963Z"
-                        fill="#E9FCFF"></path>
-                    <path d="M25.2053 27.6963V35.4868H28.484V37.8657H22.4932V27.6963H25.2053Z" fill="#E9FCFF"></path>
-                    <path
-                        d="M35.3142 27.6963L39.4553 37.8657H36.5328L35.9162 36.1763H32.1939L31.5773 37.8657H28.6548L32.7959 27.6963H35.3101H35.3142ZM34.9143 33.5663L34.2144 31.7832C34.1582 31.6395 33.954 31.6395 33.8978 31.7832L33.1979 33.5663C33.1541 33.6767 33.2354 33.7975 33.3562 33.7975H34.756C34.8747 33.7975 34.958 33.6767 34.9143 33.5663Z"
-                        fill="#E9FCFF"></path>
-                    <path
-                        d="M40.9491 27.6963L42.8592 30.5188L44.7694 27.6963H48.0355L44.2132 33.2559V37.8657H41.5011V33.2559L37.6787 27.6963H40.9449H40.9491Z"
-                        fill="#E9FCFF"></path>
-                    <path
-                        d="M16.894 32.1396V29.9129C16.894 29.8212 16.9982 29.7671 17.0732 29.8191L18.6771 30.9315C18.7417 30.9773 18.7417 31.0731 18.6771 31.1189L17.0732 32.2313C16.9982 32.2834 16.894 32.2313 16.894 32.1375V32.1396Z"
-                        fill="#232323"></path>
-                    <defs>
-                        <linearGradient id="paint0_linear_53_10115" x1="2.23416" y1="20.3361" x2="26.863" y2="44.9649"
-                            gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#007EF8"></stop>
-                            <stop offset="1" stop-color="#FF4A9A"></stop>
-                        </linearGradient>
-                    </defs>
-                </svg>
+<body class="custom-scrollbar">
+    <div class="min-h-screen flex items-center justify-center bg-[#0f0f0f] text-white p-4">
+        <!-- Loading -->
+        <div id="bufferingDiv" class="hidden flex-col gap-3 items-center fixed inset-0 z-[60] justify-center bg-black/70 backdrop-blur-sm">
+            <div id="showMessage" class="text-white text-xl text-center font-semibold">Please wait...</div>
+            <dotlottie-player src="https://lottie.host/27feff6c-53ae-48c7-9539-9a37724286be/8okSjWIQl7.json" background="transparent" speed="1" style="width: 60px; height: 60px;" loop autoplay></dotlottie-player>
+        </div>
+
+        <div id="popUp" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden px-5 py-3 bg-red-500/10 backdrop-blur-md border border-red-500/20 rounded-xl text-red-400 text-sm font-medium shadow-2xl animate-slide-up"></div>
+
+        <div class="w-full max-w-md my-8">
+            <!-- Logo -->
+            <div class="flex justify-center mb-6">
+                <a href="/Home" class="inline-block w-14 transition-transform duration-200 hover:scale-110">
+                    <svg style="width:100%" viewBox="0 0 63 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M47.25 47.458C55.9485 38.7595 55.9485 24.6565 47.25 15.958C38.5515 7.25952 24.4485 7.25952 15.75 15.958C7.05151 24.6565 7.05151 38.7595 15.75 47.458C24.4485 56.1565 38.5515 56.1565 47.25 47.458Z" stroke="#E9FCFF" stroke-width="1.38962" stroke-miterlimit="10"></path>
+                        <path d="M10.5366 47.7971V17.5057C10.5366 16.9599 11.1511 16.6391 11.599 16.9495L33.4166 32.0952C33.8041 32.3639 33.8041 32.9368 33.4166 33.2076L11.599 48.3533C11.1511 48.6657 10.5366 48.3429 10.5366 47.7971Z" stroke="url(#paint0_linear_reg)" stroke-width="6.99574" stroke-miterlimit="10" stroke-linecap="round"></path>
+                        <path d="M18.1915 27.6963C20.1641 27.6963 21.7285 28.7066 21.7285 30.9021C21.7285 33.0976 20.1621 34.2433 18.1915 34.2433H16.8854V37.8677H14.1733V27.6984H18.1915V27.6963Z" fill="#E9FCFF"></path>
+                        <path d="M25.2053 27.6963V35.4868H28.484V37.8657H22.4932V27.6963H25.2053Z" fill="#E9FCFF"></path>
+                        <path d="M35.3142 27.6963L39.4553 37.8657H36.5328L35.9162 36.1763H32.1939L31.5773 37.8657H28.6548L32.7959 27.6963H35.3101H35.3142ZM34.9143 33.5663L34.2144 31.7832C34.1582 31.6395 33.954 31.6395 33.8978 31.7832L33.1979 33.5663C33.1541 33.6767 33.2354 33.7975 33.3562 33.7975H34.756C34.8747 33.7975 34.958 33.6767 34.9143 33.5663Z" fill="#E9FCFF"></path>
+                        <path d="M40.9491 27.6963L42.8592 30.5188L44.7694 27.6963H48.0355L44.2132 33.2559V37.8657H41.5011V33.2559L37.6787 27.6963H40.9449H40.9491Z" fill="#E9FCFF"></path>
+                        <path d="M16.894 32.1396V29.9129C16.894 29.8212 16.9982 29.7671 17.0732 29.8191L18.6771 30.9315C18.7417 30.9773 18.7417 31.0731 18.6771 31.1189L17.0732 32.2313C16.9982 32.2834 16.894 32.2313 16.894 32.1375V32.1396Z" fill="#232323"></path>
+                        <defs>
+                            <linearGradient id="paint0_linear_reg" x1="2.23416" y1="20.3361" x2="26.863" y2="44.9649" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#007EF8"></stop>
+                                <stop offset="1" stop-color="#FF4A9A"></stop>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </a>
             </div>
-            <div class="mb-6 w-full text-center text-xl text-red-400 font-semibold ">It may take some time :) </div>
-            
-            <label id="otpLabel" for="otp" class="mb-1 text-gray-300 flex justify-between">OTP* <span class="font-medium text-[#ae7aff] cursor-pointer" id="resend_OTP">Resend OTP</span></label>
-            <input id="otp" type="number" placeholder="Enter your OTP" autofocus class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
-            <div id="message" class="text-gray-400 mb-2">Your OTP will be valid for <span id="countDown">100</span> seconds</div>
-            <button id="verifyEmail" class="bg-[#ae7aff] disabled:bg-purple-300 px-4 py-3 text-black">Verify Email</button>
-            
 
-            <form id="profileForm" class="mx-auto my-3 flex w-full max-w-sm flex-col">
-                <input type="email" name="email" id="emailInput" class="hidden">
-                <label for="fullname" class=" mb-1 inline-block text-gray-300">Fullname*</label>
-                <input id="fullname" type="text" name="fullName" placeholder="Enter your fullname" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
-                
-                <label for="username" class="mb-1 inline-block text-gray-300">Username*</label>
-                <input id="username" type="text" name="username" placeholder="Enter your username" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
-                <div id="usernameAlert" class="text-sm hidden"> This username already exists </div>
+            <!-- Card -->
+            <div class="glass-card p-6 sm:p-8 animate-fade-in">
+                <h1 class="text-2xl font-bold text-center mb-1">Create your account</h1>
+                <p class="text-amber-400/80 text-center text-sm mb-6">It may take some time :)</p>
 
-                <label for="password" class="mb-1 inline-block text-gray-300">Password*</label>
-                <input id="password" type="text" name="password" placeholder="Enter your password" class="mb-4 rounded-lg border bg-transparent px-3 py-2" />
-
-                <div class="flex flex-col gap-5 mb-6">
-                    <div class="w-full">
-                        <label for="avatar" class="mb-2 block text-sm font-medium text-gray-300">Avatar*</label>
-                        <input id="avatar" type="file" name="avatar" accept="image/*"
-                            class="block w-full text-sm text-gray-400 border border-gray-600 rounded-lg cursor-pointer bg-transparent focus:outline-none focus:border-[#ae7aff] file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-[#ae7aff] file:text-black hover:file:bg-[#9a6eea] transition-all duration-300" />
+                <!-- OTP Section -->
+                <div class="space-y-3 mb-4">
+                    <div>
+                        <label id="otpLabel" for="otp" class="flex justify-between text-sm font-medium text-gray-300 mb-1.5">
+                            OTP*
+                            <span class="text-[#ae7aff] cursor-pointer hover:text-[#c4a0ff] transition-colors duration-200 text-xs font-semibold" id="resend_OTP">Resend OTP</span>
+                        </label>
+                        <input id="otp" type="number" placeholder="Enter your OTP" autofocus class="input-field" />
                     </div>
-
-                    <div class="w-full">
-                        <label for="coverImage" class="mb-2 block text-sm font-medium text-gray-300">Cover Image</label>
-                        <input id="coverImage" name="coverImage" type="file" accept="image/*"
-                            class="block w-full text-sm text-gray-400 border border-gray-600 rounded-lg cursor-pointer bg-transparent focus:outline-none focus:border-[#ae7aff] file:mr-4 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-[#ae7aff] file:text-black hover:file:bg-[#9a6eea] transition-all duration-300" />
-                    </div>
+                    <div id="message" class="text-gray-500 text-xs">Your OTP will be valid for <span id="countDown" class="text-[#ae7aff] font-semibold">100</span> seconds</div>
+                    <button id="verifyEmail" class="btn-accent w-full py-3 text-base">Verify Email</button>
                 </div>
 
-                <button id="createAcc" class="bg-[#ae7aff] px-4 py-3 text-black">Create Account</button>
-            </form>
+                <!-- Registration Form -->
+                <form id="profileForm" class="space-y-4 mt-6 pt-6 border-t border-white/[0.08]">
+                    <input type="email" name="email" id="emailInput" class="hidden">
 
-            <a class="text-[#ae7aff] text-center text-lg underline cursor-pointer mt-5">Log in</a>
+                    <div>
+                        <label for="fullname" class="block text-sm font-medium text-gray-300 mb-1.5">Full Name*</label>
+                        <input id="fullname" type="text" name="fullName" placeholder="Enter your full name" class="input-field" />
+                    </div>
+
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-300 mb-1.5">Username*</label>
+                        <input id="username" type="text" name="username" placeholder="Enter your username" class="input-field" />
+                        <div id="usernameAlert" class="text-xs text-red-400 mt-1 hidden">This username already exists</div>
+                    </div>
+
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-300 mb-1.5">Password*</label>
+                        <input id="password" type="password" name="password" placeholder="Create a password" class="input-field" />
+                    </div>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="avatar" class="block text-sm font-medium text-gray-300 mb-1.5">Avatar*</label>
+                            <input id="avatar" type="file" name="avatar" accept="image/*"
+                                class="block w-full text-sm text-gray-400 rounded-lg cursor-pointer bg-white/[0.04] border border-white/10 transition-all duration-300 hover:border-[#ae7aff]/30 file:mr-3 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-[#ae7aff] file:to-[#8b5cf6] file:text-black file:cursor-pointer" />
+                        </div>
+                        <div>
+                            <label for="coverImage" class="block text-sm font-medium text-gray-300 mb-1.5">Cover Image</label>
+                            <input id="coverImage" name="coverImage" type="file" accept="image/*"
+                                class="block w-full text-sm text-gray-400 rounded-lg cursor-pointer bg-white/[0.04] border border-white/10 transition-all duration-300 hover:border-[#ae7aff]/30 file:mr-3 file:py-2.5 file:px-4 file:rounded-l-lg file:border-0 file:text-sm file:font-semibold file:bg-gradient-to-r file:from-[#ae7aff] file:to-[#8b5cf6] file:text-black file:cursor-pointer" />
+                        </div>
+                    </div>
+
+                    <button id="createAcc" class="btn-accent w-full py-3 text-base mt-2">Create Account</button>
+                </form>
+
+                <p class="mt-6 text-center text-sm text-gray-400">
+                    Already have an account? <a href="/Log_in" class="text-[#ae7aff] font-medium hover:text-[#c4a0ff] transition-colors duration-200">Log in</a>
+                </p>
+            </div>
         </div>
     </div>
 

@@ -28,12 +28,12 @@ const addCommentsInClient = (e) => {
     addComments(datasetDiv.dataset.videoid, "video", commentInput.value).then((data) => {
         if (data) {
             let html = `
-                <div  class="flex gap-x-4 border-b pb-2 pt-1 relative">
+                <div  class="flex gap-x-4 border-b border-white/[0.08] pb-3 pt-2 relative">
                                         <div data-userid=${data.data.commenter} class="mt-2 h-11 w-11 shrink-0"><img
                                                 src=${commenterAvatar}
                                                 alt="sarahjv" class="h-full w-full rounded-full object-cover object-center" /></div>
                                         <div class="block w-full">
-                                            <p class="flex items-center text-gray-200" style="color: #e5e7eb;">${commenterFullname} · <span
+                                            <p class="flex items-center text-gray-200" >${commenterFullname} · <span
                                                     class="text-sm">${getWhenVideoUploaded(data.data.createdAt)}</span></p>
                                             <p class="text-sm text-gray-500">@${commenterUsername}</p>
 
@@ -45,11 +45,11 @@ const addCommentsInClient = (e) => {
                                         </div>
                                         <div class="absolute right-0"><span class="threeDots material-symbols-outlined mt-4 cursor-pointer transition-transform transform duration-150">more_vert</span></div>
 
-                                        <div data-commentid=${data.data._id} class="dotDiv bg-[#000000] hidden border border-[#ae7aff] absolute right-6 bottom-1 rounded-md ">
-                                            <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">report</span>Report</div>
-                                            <div class="editBtn flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
-                                            <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">keep</span>Pin</div>
-                                            <div class="deleteComm ${commenterID == data.data.commenter? "" : "hidden"} flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
+                                        <div data-commentid=${data.data._id} class="dotDiv glass-card hidden border border-white/10 absolute right-6 bottom-1 rounded-xl ">
+                                            <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">report</span>Report</div>
+                                            <div class="editBtn flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
+                                            <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">keep</span>Pin</div>
+                                            <div class="deleteComm ${commenterID == data.data.commenter? "" : "hidden"} flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
                                         </div>
                                     </div>
             `
@@ -167,12 +167,12 @@ const populateComment = (comments)=>{
     }
     comments.data.map((comment) => {
         let html = `
-            <div data-commentid=${comment._id} class="flex gap-x-4 border-b pb-2 pt-1 relative ">
+            <div data-commentid=${comment._id} class="flex gap-x-4 border-b border-white/[0.08] pb-3 pt-2 relative ">
                             <div data-userid=${comment.commenter._id} class="commenter mt-2 h-11 w-11 shrink-0"><img
                                     src=${comment.commenter.avatar}
                                     alt="sarahjv" class="h-full w-full rounded-full object-cover object-center" /></div>
                             <div class="block w-full">
-                                <p class="flex items-center text-gray-200" style="color: #e5e7eb;">${comment.commenter.fullName} · <span
+                                <p class="flex items-center text-gray-200" >${comment.commenter.fullName} · <span
                                         class="text-sm">${getWhenVideoUploaded(comment.createdAt)}</span></p>
                                 <p class="text-sm text-gray-500">@${comment.commenter.username}</p>
 
@@ -184,11 +184,11 @@ const populateComment = (comments)=>{
                             </div>
                             <div class="absolute right-0"><span class="threeDots material-symbols-outlined mt-4 cursor-pointer transition-transform transform duration-150">more_vert</span></div>
 
-                            <div data-commentid=${comment._id} class="dotDiv bg-[#000000] hidden border border-[#ae7aff] absolute right-6 bottom-1 rounded-md ">
-                                <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">report</span>Report</div>
-                                <div class="${(commenterUsername == comment.commenter.username)? "" : "hidden"} editBtn flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
-                                <div class="flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">keep</span>Pin</div>
-                                <div class="deleteComm ${commenterID == comment.commenter._id? "" : "hidden"} flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
+                            <div data-commentid=${comment._id} class="dotDiv glass-card hidden border border-white/10 absolute right-6 bottom-1 rounded-xl ">
+                                <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">report</span>Report</div>
+                                <div class="${(commenterUsername == comment.commenter.username)? "" : "hidden"} editBtn flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Edit</div>
+                                <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">keep</span>Pin</div>
+                                <div class="deleteComm ${commenterID == comment.commenter._id? "" : "hidden"} flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Delete</div>
                             </div>
                         </div>
         `
@@ -260,14 +260,14 @@ fetch(`${DOMAIN}/api/v1/videos/g-p-d/${videoID}`).then((response) => {
         .then(async (suggestedVideos) => {
             let promises = suggestedVideos.data.map(async element => {
                 const html = `
-        <div class="w-full gap-x-2 border pr-2 md:flex">
+        <div class="w-full gap-x-2 video-card p-2 rounded-xl md:flex">
                         <div class="relative mb-2 w-full md:mb-0 md:w-5/12">
                             <div class="w-full pt-[56%]">
                                 <div class="video absolute inset-0" data-videoid=${element._id}><img
                                         src=${element.thumbnail}
                                         alt="JavaScript Fundamentals: Variables and Data Types"
                                         class="h-full w-full object-cover object-center" /></div><span
-                                    class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(element.duration)}</span>
+                                    class="duration-badge">${formatDuration(element.duration)}</span>
                             </div>
                         </div>
                         <div class="flex gap-x-2 px-2 pb-2 pt-1 md:w-7/12 md:px-0 md:py-0.5">

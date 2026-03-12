@@ -9,23 +9,22 @@ fetch(`${DOMAIN}/api/v1/videos?pageNo=${pageNo}&limit=18`).then((res)=> res.json
     const LS_video = localStorage.getItem("video");
     let promises = data.data.map(async video => {
             let html = `
-            <div class="w-full ${(LS_video != null)? (JSON.parse(LS_video).videoID == video._id)? "hidden" : "" : ""} ">
-                            <div class=" relative mb-2 w-full pt-[56%]">
-                                <div class="video absolute inset-0" data-videoid=${video._id}><img
+            <div class="video-card p-2 ${(LS_video != null)? (JSON.parse(LS_video).videoID == video._id)? "hidden" : "" : ""}">
+                            <div class="thumbnail-wrap relative mb-3 w-full pt-[56%]">
+                                <div class="video absolute inset-0 cursor-pointer" data-videoid=${video._id}><img
                                         src=${video.thumbnail}
-                                        alt="JavaScript Fundamentals: Variables and Data Types" class="h-full w-full object-cover object-center" />
+                                        alt="${video.title}" class="h-full w-full rounded-xl" />
                                 </div>
-                                <span
-                                    class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                                <span class="duration-badge">${formatDuration(video.duration)}</span>
                             </div>
-                            <div class="flex gap-x-2">
-                                <div data-channelid=${video.owner._id} class="channels h-10 w-10 shrink-0"><img
+                            <div class="flex gap-x-3 px-1">
+                                <div data-channelid=${video.owner._id} class="channels h-9 w-9 shrink-0 cursor-pointer"><img
                                         src=${video.owner.avatar}
-                                        alt="codemaster" class="h-full w-full rounded-full object-cover object-center" /></div>
-                                <div class="w-full">
-                                    <h6 class="mb-1 font-semibold">${video.title}</h6>
-                                    <p class="flex text-sm text-gray-200">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
-                                    <p class="text-sm text-gray-200">${video.owner.fullName}</p>
+                                        alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 transition-all duration-300 hover:ring-[#ae7aff]/50" /></div>
+                                <div class="w-full min-w-0">
+                                    <h6 class="mb-0.5 font-semibold text-[0.95rem] leading-snug line-clamp-2">${video.title}</h6>
+                                    <p class="text-xs text-gray-400 mt-1">${video.owner.fullName}</p>
+                                    <p class="text-xs text-gray-500">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
                                 </div>
                             </div>
                         </div>
@@ -53,23 +52,22 @@ document.getElementById("loadMore").addEventListener("click", ()=>{
         let section = document.getElementById("showAllVideo")
         let promises = data.data.map(async video => {
             let html = `
-            <div class="w-full">
-                            <div class=" relative mb-2 w-full pt-[56%]">
-                                <div class="video absolute inset-0" data-videoid=${video._id}><img
+            <div class="video-card p-2">
+                            <div class="thumbnail-wrap relative mb-3 w-full pt-[56%]">
+                                <div class="video absolute inset-0 cursor-pointer" data-videoid=${video._id}><img
                                         src=${video.thumbnail}
-                                        alt="JavaScript Fundamentals: Variables and Data Types" class="h-full w-full object-cover object-center" />
+                                        alt="${video.title}" class="h-full w-full rounded-xl" />
                                 </div>
-                                <span
-                                    class="absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                                <span class="duration-badge">${formatDuration(video.duration)}</span>
                             </div>
-                            <div class="flex gap-x-2">
-                                <div data-channelid=${video.owner._id} class="channels h-10 w-10 shrink-0"><img
+                            <div class="flex gap-x-3 px-1">
+                                <div data-channelid=${video.owner._id} class="channels h-9 w-9 shrink-0 cursor-pointer"><img
                                         src=${video.owner.avatar}
-                                        alt="codemaster" class="object-cover object-center h-full w-full rounded-full" /></div>
-                                <div class="w-full">
-                                    <h6 class="mb-1 font-semibold">${video.title}</h6>
-                                    <p class="flex text-sm text-gray-200">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
-                                    <p class="text-sm text-gray-200">${video.owner.fullName}</p>
+                                        alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 transition-all duration-300 hover:ring-[#ae7aff]/50" /></div>
+                                <div class="w-full min-w-0">
+                                    <h6 class="mb-0.5 font-semibold text-[0.95rem] leading-snug line-clamp-2">${video.title}</h6>
+                                    <p class="text-xs text-gray-400 mt-1">${video.owner.fullName}</p>
+                                    <p class="text-xs text-gray-500">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
                                 </div>
                             </div>
                         </div>

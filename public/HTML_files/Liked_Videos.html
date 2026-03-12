@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>VideoTubes - Library</title>
     <link rel="stylesheet" href="../src/output.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
-<body>
-    <div id="noOfVideosDiv" class="flex absolute top-[1.2rem] sm:top-[2rem] left-1/2 -translate-x-1/2 z-[51] text-[1.15rem] sm:text-2xl font-bold text-white">
+<body class="custom-scrollbar">
+    <div id="noOfVideosDiv" class="flex fixed top-2.5 sm:top-5 left-1/2 -translate-x-1/2 z-[51] text-sm sm:text-xl font-bold text-white bg-[#0f0f0f]/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/[0.06]">
         <div id="what"></div>
-        <span id="noOfVideos"></span>
+        <span id="noOfVideos" class="text-[#ae7aff]"></span>
     </div>
 
-    <div class="h-screen overflow-y-auto bg-[#121212] text-white" data-layout-wrapper>
+    <div class="h-screen overflow-y-auto bg-[#0f0f0f] text-white custom-scrollbar" data-layout-wrapper>
         <div class="flex min-h-[calc(100vh-66px)] sm:min-h-[calc(100vh-82px)]" data-layout-content>
-            <section class="w-full pb-[70px] sm:ml-[70px] sm:pb-0 lg:ml-0">
-                <div id="likedVideosSection" class="flex flex-col gap-4 p-4">
+            <section class="w-full pb-[5rem] sm:ml-[70px] sm:pb-0 lg:ml-0">
+                <div id="likedVideosSection" class="flex flex-col gap-4 p-4 sm:p-6 mt-8 sm:mt-4">
                 </div>
             </section>
         </div>

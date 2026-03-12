@@ -1,5 +1,5 @@
 // layout.js — Shared layout components for VideoTubes
-// Injects header, sidebar, mobile menu, and #riju overlay into pages.
+// Modern, glassmorphism-inspired dark theme with smooth transitions
 
 // ─── SVG Constants ───────────────────────────────────────────────
 
@@ -32,16 +32,6 @@ const ICON = {
   close: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`,
 };
 
-// ─── CSS Classes ─────────────────────────────────────────────────
-
-const BTN_DEFAULT = 'flex flex-col items-center justify-center border-white py-1 focus:text-[#ae7aff] sm:w-full sm:flex-row sm:border sm:p-1.5 sm:hover:bg-[#ae7aff] sm:hover:text-black sm:focus:border-[#ae7aff] sm:focus:bg-[#ae7aff] sm:focus:text-black sm:group-hover:justify-start sm:group-hover:px-4 lg:justify-start lg:px-4';
-
-const BTN_ACTIVE = 'flex flex-col items-center justify-center py-1 sm:w-full sm:flex-row sm:border sm:p-1.5 sm:border-[#ae7aff] sm:bg-[#ae7aff] text-[#ae7aff] bg-transparent sm:text-black sm:group-hover:justify-start sm:group-hover:px-4 lg:justify-start lg:px-4';
-
-const MOBILE_BTN_DEFAULT = 'flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black';
-
-const MOBILE_BTN_ACTIVE = 'flex w-full items-center justify-start gap-x-4 border px-4 py-1.5 text-left text-black border-[#ae7aff] bg-[#ae7aff]';
-
 // ─── Sidebar items configuration ─────────────────────────────────
 
 const SIDEBAR_ITEMS = [
@@ -69,10 +59,11 @@ function injectSharedStyles() {
   const style = document.createElement('style');
   style.id = 'layout-shared-styles';
   style.textContent = `
+    /* Ripple / wave effect */
     .wave {
       position: absolute;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
+      background: rgba(174, 122, 255, 0.35);
       pointer-events: none;
       width: 20px;
       height: 20px;
@@ -83,10 +74,61 @@ function injectSharedStyles() {
       from { transform: scale(0); opacity: 1; }
       to { transform: scale(3); opacity: 0; }
     }
+
+    /* Custom scrollbar */
     .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #ae7aff; border-radius: 10px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ae7aff 0%, #8b5cf6 100%);
+      border-radius: 10px;
+    }
     .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
     .custom-scrollbar { scrollbar-width: thin; scrollbar-color: #ae7aff transparent; }
+
+    /* Smooth page transitions */
+    [data-layout-wrapper] {
+      animation: pageIn 0.35s ease-out;
+    }
+    @keyframes pageIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Header glass effect */
+    .header-glass {
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Sidebar glass */
+    .sidebar-glass {
+      background: rgba(15, 15, 15, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Mobile menu glass */
+    .mobile-menu-glass {
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    /* Alert toast animation */
+    .alert-toast {
+      animation: slideDown 0.3s ease-out;
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translate(-50%, -12px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    /* Hover glow for clickable items */
+    .hover-glow:hover {
+      box-shadow: 0 0 0 1px rgba(174, 122, 255, 0.2);
+    }
   `;
   document.head.appendChild(style);
 }
@@ -95,45 +137,47 @@ function injectSharedStyles() {
 
 function createHeaderHTML(showAuthButtons) {
   const authSection = showAuthButtons
-    ? `<div class="mb-8 mt-auto flex w-full flex-wrap gap-4 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
-        <button id="logOut" class="hidden w-full bg-[#383737] px-3 py-2 hover:bg-[#4f4e4e] sm:w-auto sm:bg-transparent">Log Out</button>
-        <button id="logIn" class="w-full bg-[#383737] px-3 py-2 hover:bg-[#4f4e4e] sm:w-auto sm:bg-transparent">Log in</button>
-        <button id="signUp" class="mr-1 w-full bg-[#ae7aff] px-3 py-2 text-center font-bold text-black shadow-[5px_5px_0px_0px_#4f4e4e] transition-all duration-150 ease-in-out active:translate-x-[5px] active:translate-y-[5px] active:shadow-[0px_0px_0px_0px_#4f4e4e] sm:w-auto">Sign up</button>
+    ? `<div class="mb-8 mt-auto flex w-full flex-wrap gap-3 px-4 sm:mb-0 sm:mt-0 sm:items-center sm:px-0">
+        <button id="logOut" class="hidden w-full rounded-lg bg-white/[0.06] px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/[0.12] sm:w-auto">Log Out</button>
+        <button id="logIn" class="w-full rounded-lg bg-white/[0.06] px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-white/[0.12] sm:w-auto">Log in</button>
+        <button id="signUp" class="w-full rounded-lg bg-gradient-to-r from-[#ae7aff] to-[#8b5cf6] px-5 py-2 text-sm font-bold text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(174,122,255,0.4)] hover:scale-[1.02] active:scale-[0.98] sm:w-auto">Sign up</button>
       </div>`
     : `<button id="signUp" class="hidden"></button>
        <button id="logIn" class="hidden"></button>
        <div id="avatarSection" class="mb-8 mt-auto px-4 sm:mb-0 sm:mt-0 sm:px-0">
-        <button class="flex w-full gap-4 text-left sm:items-center">
-          <img id="avatarLogo" src="" alt="avatar" class="h-16 w-16 shrink-0 rounded-full sm:h-12 sm:w-12 object-cover object-center" />
+        <button class="flex w-full gap-4 text-left sm:items-center group">
+          <img id="avatarLogo" src="" alt="avatar" class="h-14 w-14 shrink-0 rounded-full sm:h-10 sm:w-10 object-cover object-center ring-2 ring-white/10 transition-all duration-300 group-hover:ring-[#ae7aff]/50" />
           <div class="w-full pt-2 sm:hidden">
             <h6 id="avatarName" class="font-semibold"></h6>
-            <p id="avatarHandle" class="text-sm text-gray-300"></p>
+            <p id="avatarHandle" class="text-sm text-gray-400"></p>
           </div>
         </button>
        </div>`;
 
-  return `<header class="sticky inset-x-0 top-0 z-50 w-full border-b border-white bg-[#121212] px-4">
-    <nav class="mx-auto flex max-w-7xl items-center py-2">
-      <div id="alertDiv" class="absolute -z-10 top-20 sm:top-28 left-[10%] sm:left-[24%] lg:left-[34%] sm:p-4 lg:p-6 p-3 bg-black rounded-lg border-white font-medium text-sm sm:text-lg lg:text-xl transition duration-200 hidden">
-        Please Log in or create a new Account
+  return `<header class="header-glass sticky inset-x-0 top-0 z-50 w-full px-4">
+    <nav class="mx-auto flex max-w-7xl items-center py-2.5 gap-4">
+      <div id="alertDiv" class="alert-toast fixed top-20 left-1/2 -translate-x-1/2 z-[60] px-5 py-3 bg-[#1a1a2e]/95 backdrop-blur-md rounded-xl border border-white/10 font-medium text-sm sm:text-base shadow-2xl shadow-black/40 transition-all duration-300 hidden">
+        <span class="text-[#ae7aff] mr-1">&#9432;</span> Please Log in or create a new Account
       </div>
-      <div class="mr-4 w-12 shrink-0 sm:w-16">${PLAY_LOGO}</div>
-      <div id="searchBoxDiv" class="absolute hidden top-44 left-1/2 -translate-x-1/2 sm:-translate-x-0 w-[20rem] sm:relative sm:top-0 sm:left-0 mx-auto sm:w-full max-w-md overflow-hidden sm:block">
-        <input id="searchBox" class="w-full border bg-[#181818] sm:bg-transparent py-3 pl-8 pr-3 placeholder-white outline-none sm:py-2" placeholder="Search" />
-        <span class="absolute left-2.5 top-1/2 inline-block -translate-y-1/2"><span class="h-4 w-4 inline-block">${ICON.search}</span></span>
+      <a href="/Home" class="mr-2 w-10 shrink-0 sm:w-12 transition-transform duration-200 hover:scale-105">${PLAY_LOGO}</a>
+      <div id="searchBoxDiv" class="absolute hidden top-[4.5rem] left-1/2 -translate-x-1/2 w-[92%] max-w-md sm:relative sm:top-0 sm:left-0 mx-auto sm:w-full sm:max-w-md overflow-hidden sm:block">
+        <input id="searchBox" class="w-full rounded-xl border border-white/10 bg-white/[0.04] py-2.5 pl-10 pr-4 text-sm placeholder-gray-500 outline-none transition-all duration-300 focus:border-[#ae7aff]/40 focus:bg-white/[0.06] focus:shadow-[0_0_0_3px_rgba(174,122,255,0.08)]" placeholder="Search videos..." />
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"><span class="h-4 w-4 inline-block">${ICON.search}</span></span>
       </div>
-      <button id="search" class="ml-auto sm:hidden"><span class="h-6 w-6 inline-block">${ICON.search}</span></button>
-      <button id="hamBurger" class="group ml-4 flex w-6 shrink-0 flex-wrap gap-y-1.5 sm:hidden">
-        <span class="block h-[2px] w-full bg-white group-hover:bg-[#ae7aff]"></span>
-        <span class="block h-[2px] w-2/3 bg-white group-hover:bg-[#ae7aff]"></span>
-        <span class="block h-[2px] w-full bg-white group-hover:bg-[#ae7aff]"></span>
-      </button>
-      <div id="menuDiv" class="fixed inset-y-0 right-0 flex w-full max-w-xs shrink-0 translate-x-full sm:translate-x-0 flex-col border-l border-white bg-[#121212] duration-200 sm:static sm:ml-4 sm:w-auto sm:border-none">
-        <div class="relative flex w-full items-center justify-between border-b border-white px-4 py-2 sm:hidden">
-          <span class="inline-block w-12">${PLAY_LOGO}</span>
-          <button id="cross" class="inline-block w-8">${ICON.close}</button>
+      <button id="search" class="ml-auto rounded-lg p-2 text-gray-400 transition-all duration-200 hover:bg-white/[0.06] hover:text-white sm:hidden"><span class="h-5 w-5 inline-block">${ICON.search}</span></button>
+      <button id="hamBurger" class="group rounded-lg p-2 transition-all duration-200 hover:bg-white/[0.06] sm:hidden">
+        <div class="flex w-5 flex-col gap-y-1">
+          <span class="block h-[2px] w-full rounded-full bg-gray-300 transition-all duration-200 group-hover:bg-[#ae7aff]"></span>
+          <span class="block h-[2px] w-3/4 rounded-full bg-gray-300 transition-all duration-200 group-hover:bg-[#ae7aff] group-hover:w-full"></span>
+          <span class="block h-[2px] w-full rounded-full bg-gray-300 transition-all duration-200 group-hover:bg-[#ae7aff]"></span>
         </div>
-        <ul class="my-4 flex w-full flex-wrap gap-2 px-4 sm:hidden">
+      </button>
+      <div id="menuDiv" class="mobile-menu-glass fixed inset-y-0 right-0 flex w-full max-w-xs shrink-0 translate-x-full flex-col border-l border-white/[0.06] duration-300 ease-out sm:static sm:ml-2 sm:w-auto sm:translate-x-0 sm:border-none sm:bg-transparent sm:backdrop-blur-none">
+        <div class="relative flex w-full items-center justify-between border-b border-white/[0.08] px-4 py-3 sm:hidden">
+          <span class="inline-block w-10">${PLAY_LOGO}</span>
+          <button id="cross" class="inline-block w-7 text-gray-400 transition-colors duration-200 hover:text-white">${ICON.close}</button>
+        </div>
+        <ul class="my-4 flex w-full flex-wrap gap-1.5 px-3 sm:hidden">
           ${createMobileMenuHTML()}
         </ul>
         ${authSection}
@@ -144,13 +188,15 @@ function createHeaderHTML(showAuthButtons) {
 
 // ─── Mobile menu HTML builder ────────────────────────────────────
 
+const MOBILE_BTN_DEFAULT = 'flex w-full items-center gap-x-3 rounded-xl px-4 py-2.5 text-left text-gray-300 transition-all duration-200 hover:bg-white/[0.06] hover:text-white';
+const MOBILE_BTN_ACTIVE = 'flex w-full items-center gap-x-3 rounded-xl px-4 py-2.5 text-left bg-[#ae7aff]/10 text-[#ae7aff] font-medium';
+
 function createMobileMenuHTML() {
-  // Mobile menu items (active state handled after DOM insertion)
   return MOBILE_MENU_ITEMS.map(item => {
     const idAttr = item.id ? ` id="${item.id}"` : '';
     return `<li${idAttr} class="w-full">
       <button class="${MOBILE_BTN_DEFAULT}">
-        <span class="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">${ICON[item.icon]}</span>
+        <span class="inline-block w-5 shrink-0">${ICON[item.icon]}</span>
         <span>${item.label}</span>
       </button>
     </li>`;
@@ -160,29 +206,48 @@ function createMobileMenuHTML() {
 // ─── Sidebar HTML builder ────────────────────────────────────────
 
 function createSidebarHTML(activePage, expanded) {
-  const lgExpanded = expanded ? ' lg:sticky lg:max-w-[250px]' : '';
+  const lgExpanded = expanded ? ' lg:sticky lg:max-w-[220px]' : '';
   const textClass = expanded
-    ? 'block sm:hidden sm:group-hover:inline lg:inline'
-    : 'block sm:hidden sm:group-hover:inline';
+    ? 'hidden sm:hidden sm:group-hover:inline lg:inline text-sm'
+    : 'hidden sm:hidden sm:group-hover:inline text-sm';
 
   const items = SIDEBAR_ITEMS.map(item => {
     const isActive = activePage === item.key;
-    const btnClass = isActive ? BTN_ACTIVE : BTN_DEFAULT;
     const visibility = item.desktopOnly ? 'hidden sm:block' : '';
     const pushDown = item.pushDown ? ' mt-auto' : '';
     const liClass = `${visibility}${pushDown}`.trim();
 
+    const btnClass = isActive
+      ? 'sidebar-link-active'
+      : 'sidebar-link';
+
     return `<li id="${item.id}" class="${liClass}">
       <button class="${btnClass}">
-        <span class="inline-block w-5 shrink-0 sm:group-hover:mr-4 lg:mr-4">${ICON[item.icon]}</span>
+        <span class="inline-block w-5 shrink-0">${ICON[item.icon]}</span>
         <span class="${textClass}">${item.label}</span>
       </button>
     </li>`;
   }).join('');
 
-  return `<aside class="group fixed inset-x-0 bottom-0 z-40 w-full shrink-0 border-t border-white bg-[#121212] px-2 py-2 sm:absolute sm:inset-y-0 sm:max-w-[70px] sm:border-r sm:border-t-0 sm:py-6 sm:hover:max-w-[250px]${lgExpanded}">
-    <ul class="flex justify-around gap-y-2 sm:sticky sm:top-[106px] sm:min-h-[calc(100vh-130px)] sm:flex-col">
+  // Mobile bottom bar: show label only for active, icons smaller
+  const mobileItems = SIDEBAR_ITEMS.filter(i => i.alwaysVisible).map(item => {
+    const isActive = activePage === item.key;
+    return `<li class="flex-1">
+      <button class="flex flex-col items-center gap-0.5 w-full py-1.5 text-[10px] transition-colors duration-200 ${isActive ? 'text-[#ae7aff]' : 'text-gray-500 hover:text-gray-300'}">
+        <span class="inline-block w-5">${ICON[item.icon]}</span>
+        <span>${item.label.split(' ')[0]}</span>
+      </button>
+    </li>`;
+  }).join('');
+
+  return `<aside class="group fixed inset-x-0 bottom-0 z-40 w-full shrink-0 border-t border-white/[0.06] bg-[#0f0f0f]/95 backdrop-blur-md px-1 py-1 sm:absolute sm:inset-y-0 sm:bottom-auto sm:max-w-[70px] sm:border-r sm:border-t-0 sm:py-6 sm:hover:max-w-[220px] sm:sidebar-glass${lgExpanded}">
+    <!-- Desktop sidebar -->
+    <ul class="hidden sm:flex sm:sticky sm:top-[106px] sm:min-h-[calc(100vh-130px)] sm:flex-col gap-1 px-2">
       ${items}
+    </ul>
+    <!-- Mobile bottom bar -->
+    <ul class="flex sm:hidden justify-around">
+      ${mobileItems}
     </ul>
   </aside>`;
 }
@@ -207,10 +272,10 @@ export function initLayout(activePage, options = {}) {
   // Create #riju overlay div (for search backdrop)
   const riju = document.createElement('div');
   riju.id = 'riju';
-  riju.className = 'absolute z-10 w-full';
+  riju.className = 'absolute z-10 w-full transition-all duration-300';
   document.body.prepend(riju);
 
-  // Find the main wrapper (.h-screen wrapper div)
+  // Find the main wrapper
   const wrapper = document.querySelector('[data-layout-wrapper]');
   if (!wrapper) {
     console.error('layout.js: Missing [data-layout-wrapper] element');

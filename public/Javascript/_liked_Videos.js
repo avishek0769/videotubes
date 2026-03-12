@@ -12,29 +12,29 @@ if (liked == "true") {
             noOfVideos.innerHTML = data.data.length;
             let promises = data.data.map(async (Video) => {
                 let html = `
-                <div class="w-full max-w-3xl gap-x-4 md:flex">
+                <div class="w-full max-w-3xl gap-x-4 md:flex video-card p-2 rounded-xl">
                             <div class="relative mb-2 w-full md:mb-0 md:w-5/12">
                                 <div data-videoid=${Video.video._id} class="video w-full pt-[56%]">
-                                    <div class="absolute inset-0">
+                                    <div class="absolute inset-0 rounded-xl overflow-hidden">
                                         <img src=${Video.video.thumbnail}
-                                            alt="Advanced React Patterns" class="h-full w-full" /></div><span
-                                        class="object-cover object-center absolute bottom-1 right-1 inline-block rounded bg-black px-1.5 text-sm">${formatDuration(Video.video.duration)}</span>
+                                            alt="${Video.video.title}" class="h-full w-full object-cover object-center" /></div><span
+                                        class="duration-badge">${formatDuration(Video.video.duration)}</span>
                                 </div>
                             </div>
-                            <div class="flex gap-x-2 md:w-7/12">
+                            <div class="flex gap-x-2 md:w-7/12 pt-2 md:pt-0">
                                 <div data-userid=${Video.video.owner._id} class="owner h-10 w-10 shrink-0 md:hidden"><img
                                         src=${Video.video.owner.avatar}
-                                        alt="reactpatterns" class="h-full w-full rounded-full object-cover object-center" /></div>
+                                        alt="${Video.video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" /></div>
                                 <div class="w-full">
-                                    <h6 class="mb-1 font-semibold md:max-w-[75%]">${Video.video.title}</h6>
-                                    <p class="flex text-sm text-gray-200 sm:mt-3">${await formatViews(Video.video._id)} Views · ${getWhenVideoUploaded(Video.video.createdAt)}</p>
+                                    <h6 class="mb-1 font-semibold md:max-w-[75%] line-clamp-2">${Video.video.title}</h6>
+                                    <p class="flex text-sm text-gray-400 sm:mt-3">${await formatViews(Video.video._id)} Views · ${getWhenVideoUploaded(Video.video.createdAt)}</p>
                                     <div class="flex items-center gap-x-4">
                                         <div data-userid=${Video.video.owner._id} class="owner mt-2 hidden h-10 w-10 shrink-0 md:block"><img
                                                 src=${Video.video.owner.avatar}
-                                                alt="reactpatterns" class="h-full w-full rounded-full" /></div>
-                                        <p class="text-sm text-gray-200">${Video.video.owner.fullName} </p>
+                                                alt="${Video.video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10" /></div>
+                                        <p class="text-sm text-gray-400">${Video.video.owner.fullName} </p>
                                     </div>
-                                    <p class="mt-2 hidden text-sm md:block">${Video.video.description} </p>
+                                    <p class="mt-2 hidden text-sm text-gray-500 md:block line-clamp-2">${Video.video.description} </p>
                                 </div>
                             </div>
                         </div>
@@ -60,36 +60,36 @@ else {
         noOfVideos.innerHTML = data.data.length;
         let promises = data.data.map(async (video) => {
             let html = `
-                <div class="main relative w-full max-w-3xl gap-x-4 md:flex">
+                <div class="main relative w-full max-w-3xl gap-x-4 md:flex video-card p-2 rounded-xl">
                         <div class="relative mb-2 w-full md:mb-0 md:w-5/12">
                             <div data-videoid=${video._id} class="video w-full pt-[56%]">
-                                <div class="absolute inset-0">
+                                <div class="absolute inset-0 rounded-xl overflow-hidden">
                                     <img src=${video.thumbnail}
-                                        alt="Advanced React Patterns" class="h-full w-full" /></div><span
-                                    class="absolute bottom-1 right-1 object-cover object-center inline-block rounded bg-black px-1.5 text-sm">${formatDuration(video.duration)}</span>
+                                        alt="${video.title}" class="h-full w-full object-cover object-center" /></div><span
+                                    class="duration-badge">${formatDuration(video.duration)}</span>
                             </div>
                         </div>
-                        <div class="flex relative gap-x-2 md:w-7/12">
+                        <div class="flex relative gap-x-2 md:w-7/12 pt-2 md:pt-0">
                             <div data-userid=${video.owner._id} class="owner h-10 w-10 shrink-0 md:hidden"><img
                                     src=${video.owner.avatar}
-                                    alt="reactpatterns" class="object-cover object-center h-full w-full rounded-full" /></div>
+                                    alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" /></div>
                             <div class="w-full pr-5">
-                                <h6 class="mb-1 font-semibold md:max-w-[75%]">${video.title}</h6>
-                                <p class="flex text-sm text-gray-200 sm:mt-3">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
+                                <h6 class="mb-1 font-semibold md:max-w-[75%] line-clamp-2">${video.title}</h6>
+                                <p class="flex text-sm text-gray-400 sm:mt-3">${await formatViews(video._id)} Views · ${getWhenVideoUploaded(video.createdAt)}</p>
                                 <div class="flex items-center gap-x-4">
                                     <div data-userid=${video.owner._id} class="owner mt-2 hidden h-10 w-10 shrink-0 md:block"><img
                                             src=${video.owner.avatar}
-                                            alt="reactpatterns" class="h-full w-full rounded-full object-cover object-center" /></div>
-                                    <p class="text-sm text-gray-200">${video.owner.fullName} </p>
+                                            alt="${video.owner.fullName}" class="h-full w-full rounded-full ring-2 ring-white/10 object-cover object-center" /></div>
+                                    <p class="text-sm text-gray-400">${video.owner.fullName} </p>
                                 </div>
                             </div>
                             <div class="absolute right-1 bottom-5 sm:top-3">
-                                <span class="threeDotsHistory w-5 sm:w-auto transition-transform transform duration-150 material-symbols-outlined cursor-pointer ">more_vert</span>
+                                <span class="threeDotsHistory w-5 sm:w-auto transition-transform transform duration-150 material-symbols-outlined cursor-pointer hover:text-[#ae7aff]">more_vert</span>
                             </div>
                         </div>
-                        <div class="dotDivHistory hidden bg-black z-50 border border-[#ae7aff] absolute right-8 bottom-3 sm:bottom-24 rounded-md ">
-                            <div class=" flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Report</div>
-                            <div data-videoid=${video._id} class="removeVideo flex items-center font-medium cursor-pointer hover:bg-[#ffffff3a] p-[0.35rem] px-[0.7rem]"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Remove</div>
+                        <div class="dotDivHistory hidden glass-card z-50 border border-white/10 absolute right-8 bottom-3 sm:bottom-24 rounded-xl">
+                            <div class="flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 rounded-t-xl"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">edit</span>Report</div>
+                            <div data-videoid=${video._id} class="removeVideo flex items-center font-medium cursor-pointer hover:bg-white/[0.06] p-2 px-3 rounded-b-xl"><span class="mr-2 h-5 text-[#ae7aff] material-symbols-outlined">delete</span>Remove</div>
                         </div>
                     </div>
                 `
